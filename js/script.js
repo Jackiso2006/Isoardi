@@ -20,3 +20,63 @@
         #se il campo di testo non è vuoto aggiungere il messaggio in coda agli altri del personaggio selezionato
 
 */
+
+
+function init(){
+    //Genero gli utenti
+    let aside = document.getElementById("listUtenti");
+    let utenti = ``;
+    for(i in nomeUtenti){
+        if(i!=0){
+            utenti += `<li onclick="cambiaIcona(${i})">
+                            <div class="material-symbols-outlined icone">`;
+            if(genereUt[i] == "m")
+                utenti += "face";
+            else
+                utenti += "face_3";
+    
+            utenti += `</div>
+                        ${nomeUtenti[i]} ${cognomeUtenti[i].substring(0,1)}.
+                    </li>
+            `;
+        }
+    }
+
+    document.getElementById("listUtenti").innerHTML += utenti;
+
+    creaChat(1);
+}
+
+function cambiaIcona(i){
+    //cambio icona
+    if(genereUt[i]=="m")
+        document.getElementById("faceChat").innerText = "face";
+    else
+        document.getElementById("faceChat").innerText = "face_3";
+
+    //cambio nome
+    document.getElementById("divNome").innerText = nomeUtenti[i] + " " + cognomeUtenti[i];
+
+    //cambio ora
+    document.getElementById("divUltimoMes").innerText = ora[i];
+
+    //creo chat
+    creaChat(i);
+}
+
+function creaChat(i){
+    let chat = ``;
+    for(let j = 0; j<mittenti.length; j++){
+        if(mittenti[j] == i)
+            chat += '<article class="mes ut1">' + messaggi[j] + "</article>";
+        else if(destinatari[j] == i)
+            chat += '<article class="mes ut2">' + messaggi[j] + "</article>";
+    }
+    document.getElementById("zonaMessaggi").innerHTML = chat;
+}
+
+function invia(){
+    let testo = document.getElementById("testoInput").value;
+    document.getElementById("zonaMessaggi").innerHTML += '<article class="mes ut2">' + testo + '</article>';
+    document.getElementById("testoInput").value = "";
+}
