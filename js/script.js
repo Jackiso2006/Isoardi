@@ -43,7 +43,6 @@ function init(){
     }
 
     document.getElementById("listUtenti").innerHTML += utenti;
-
     creaChat(1);
 }
 
@@ -76,7 +75,10 @@ function creaChat(i){
 }
 
 function invia(){
+    //invio del testo quando clicco il bottone invia
     let testo = document.getElementById("testoInput").value;
-    document.getElementById("zonaMessaggi").innerHTML += '<article class="mes ut2">' + testo + '</article>';
-    document.getElementById("testoInput").value = "";
+    if(testo != ""){
+        document.getElementById("zonaMessaggi").innerHTML += '<article class="mes ut2">' + testo + '</article>';
+        document.getElementById("testoInput").value = "";
+    }
 }
