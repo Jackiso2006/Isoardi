@@ -21,55 +21,46 @@
 
 */
 
-
-function init(){
+window.addEventListener("load", function(){
     //Genero gli utenti
-    let aside = document.getElementById("listUtenti");
-    let utenti = ``;
-    for(i in nomeUtenti){
+    let utente = ``;
+    for(i in utenti){
         if(i!=0){
-            utenti += `<li onclick="cambiaIcona(${i})">
-                            <div class="material-symbols-outlined icone">`;
-            if(genereUt[i] == "m")
-                utenti += "face";
-            else
-                utenti += "face_3";
-    
-            utenti += `</div>
-                        ${nomeUtenti[i]} ${cognomeUtenti[i].substring(0,1)}.
+            utente += `<li onclick="cambiaIcona(${i})"><div class="material-symbols-outlined icone">`;
+            
+            utente += utenti[i].genereUt == "m"? "face": "face_3";
+
+            utente += `</div>
+                        ${utenti[i].nomeUtenti} ${utenti[i].cognomeUtenti.substring(0,1)}.
                     </li>
             `;
         }
     }
 
-    document.getElementById("listUtenti").innerHTML += utenti;
+    document.getElementById("listUtenti").innerHTML += utente;
     creaChat(1);
-}
+});
 
 function cambiaIcona(i){
     //cambio icona
-    if(genereUt[i]=="m")
-        document.getElementById("faceChat").innerText = "face";
-    else
-        document.getElementById("faceChat").innerText = "face_3";
-
+    document.getElementById("faceChat").innerText = utenti[i].genereUt == "m"? "face": "face_3";
+    
     //cambio nome
-    document.getElementById("divNome").innerText = nomeUtenti[i] + " " + cognomeUtenti[i];
+    document.getElementById("divNome").innerText = utenti[i].nomeUtenti + " " + utenti[i].cognomeUtenti;
 
     //cambio ora
-    document.getElementById("divUltimoMes").innerText = ora[i];
+    document.getElementById("divUltimoMes").innerText = utenti[i].ora;
 
-    //creo chat
     creaChat(i);
 }
 
 function creaChat(i){
     let chat = ``;
-    for(let j = 0; j<mittenti.length; j++){
-        if(mittenti[j] == i)
-            chat += '<article class="mes ut1">' + messaggi[j] + "</article>";
-        else if(destinatari[j] == i)
-            chat += '<article class="mes ut2">' + messaggi[j] + "</article>";
+    for(let j in messaggi){
+        if(messaggi[j].mittenti == i)
+            chat += `<article class="mes ut1">${messaggi[j].messaggio}</article>`;
+        else if(messaggi[j].destinatari == i)
+            chat += `<article class="mes ut2">${messaggi[j].messaggio}</article>`;
     }
     document.getElementById("zonaMessaggi").innerHTML = chat;
 }
